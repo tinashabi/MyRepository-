@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .di {
+            background-color: gray;
+            width: 100px;
+            height: 100px;
+            margin-top: 5px;
+
+            position: relative;
+            right: 60%;
+            left: 70%;
+        }
+
+        img {
+            width: 90px;
+            height: 90px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+
+        .e {
+            position: absolute;
+            left: 60%;
+        }
+
+        .c {
+            margin-top: -10px;
+            margin-bottom: 5px;
+
+            position: absolute;
+            left: -60px;
+
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Puzzel</h1>
+    <div class="e">
+      
+        <img id="2" class="image" src="Tulips_02.gif" />
+        <img id="20" class="image" src="Tulips_20.gif" />
+        <img id="18" class="image" src="Tulips_18.gif" />
+        <img id="3" class="image" src="Tulips_03.gif" />
+        <img id="25" class="image" src="Tulips_25.gif" />
+        <img id="15" class="image" src="Tulips_15.gif" />
+        <img id="6" class="image" src="Tulips_06.gif" />
+        <img id="24" class="image" src="Tulips_24.gif" />
+        <img id="9" class="image" src="Tulips_09.gif" />
+        <img id="1" class="image" src="Tulips_01.gif" />
+        <img id="10" class="image" src="Tulips_10.gif" />
+        <img id="4" class="image" src="Tulips_04.gif" />
+        <img id="12" class="image" src="Tulips_12.gif" />
+        <img id="8" class="image" src="Tulips_08.gif" />
+        <img id="13" class="image" src="Tulips_13.gif" />
+        <img id="22" class="image" src="Tulips_22.gif" />
+        <img id="7" class="image" src="Tulips_07.gif" />
+        <img id="17" class="image" src="Tulips_17.gif" />
+        <img id="19" class="image" src="Tulips_19.gif" />
+        <img id="14" class="image" src="Tulips_14.gif" />
+        <img id="11" class="image" src="Tulips_11.gif" />
+        <img id="5" class="image" src="Tulips_05.gif" />
+        <img id="21" class="image" src="Tulips_21.gif" />
+        <img id="23" class="image" src="Tulips_23.gif" />
+        <img id="16" class="image" src="Tulips_16.gif" />
+      
+      
+    </div>
+    <table class="c">
+        <tr>
+            <td>
+                <div id="1" class="di"></div>
+            </td>
+            <td>
+                <div id="2" class="di"></div>
+            </td>
+            <td>
+                <div id="3" class="di"></div>
+            </td>
+            <td>
+                <div id="4" class="di"></div>
+            </td>
+            <td>
+                <div id="5" class="di"></div>
+            <td>
+        </tr>
+        <tr>
+
+            <td>
+                <div id="6" class="di"></div>
+            </td>
+            <td>
+                <div id="7" class="di"></div>
+            </td>
+            <td>
+                <div id="8" class="di"></div>
+            </td>
+            <td>
+                <div id="9" class="di"></div>
+            </td>
+            <td>
+                <div id="10" class="di"></div>
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+
+            <td>
+                <div id="11" class="di"></div>
+            </td>
+            <td>
+                <div id="12" class="di"></div>
+            </td>
+            <td>
+                <div id="13" class="di"></div>
+            </td>
+            <td>
+                <div id="14" class="di"></div>
+            </td>
+            <td>
+                <div id="15" class="di"></div>
+            </td>
+        </tr>
+
+        <tr>
+
+            <td>
+                <div id="16" class="di"></div>
+            </td>
+
+            <td>
+                <div id="17" class="di"></div>
+            </td>
+            <td>
+                <div id="18" class="di"></div>
+            </td>
+            <td>
+                <div id="19" class="di"></div>
+            </td>
+            <td>
+                <div id="20" class="di"></div>
+            </td>
+        </tr>
+
+        <tr>
+
+            <td>
+                <div id="21" class="di"></div>
+            </td>
+            <td>
+                <div id="22" class="di"></div>
+            </td>
+            <td>
+                <div id="23" class="di"></div>
+            </td>
+            <td>
+                <div id="24" class="di"></div>
+            </td>
+            <td>
+                <div id="25" class="di"></div>
+            </td>
+        </tr>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        
+        $(function () {
+            $(".di").sortable({
+                revert: true
+                
+            });
+            $(".image").draggable({
+                connectToSortable: ".di",
+                revert: "invalid"
+            });
+
+            $(".image").disableSelection(this);
+
+
+        });
+        for( var i=25;i>=1;i--){
+            var temp=$("#image").html();
+            $("#image").html(temp+`<img src='puzzle img/Tulips_${i}.gif' class='ui-widet-content' id='${i}'/>`)
+        }
+
+
+        $(function () {
+            $("img").draggable();
+            $(".di").droppable({
+                drop: function (event, ui) {
+                    var box=$(this).attr("id");
+                    var puzzel = $(ui.draggable).attr("id");
+
+                    if (puzzel == box) {
+                        $(this).css("background-color", "lime");
+                        $(this).html(`<img src="${$(ui.draggable).attr("src")}">`);
+                        $(ui.draggable).hide();
+                        
+                    }
+                    
+                }
+                
+            });
+            
+        });
+       
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
