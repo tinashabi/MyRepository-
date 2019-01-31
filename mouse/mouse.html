@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{background-color: lightgreen;}
+        </style>
+</head>
+<body>
+    <div class="e">
+    <img   src="as.gif" style="width:100px; position:absolute; left:50%; top:50%;" onmouseover="a()"/>
+    </div>
+
+
+    <script>
+        function a(){
+            var allImages=document.getElementsByTagName("img")[0];
+           
+            var newTop = Math.random() * 100;
+            var newLeft = Math.random() * 100;
+
+            allImages.style.left = newLeft + "%";
+            allImages.style.top = newTop + "%";
+            
+
+        }
+
+
+    </script>
+    
+</body>
+</html>
