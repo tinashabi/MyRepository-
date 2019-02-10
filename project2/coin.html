@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+ 
+
+
+    
+    
+    <title>Document</title>
+    <style>
+       
+         .sm-4{margin-bottom:-96px;}
+        .sm-6{position: relative;top:1px;
+        }
+       
+
+         a{ font-size: 20px;  }
+
+         li:hover{ background-color:  #81898b ;color: black;}
+         
+        body {
+        
+            background-color: rgb(53, 51, 51);
+            text-align: center;
+            font-family: cursive;
+            color: black;
+        }
+        .boody{margin-top:8px;}
+
+        .parallax {
+           
+            background-image: url("g.jpg");
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        h1 {
+            font-family: cursive;
+            font-size: 60px;
+            color: rgb(255, 255, 255);
+            text-shadow: 5px 5px black;
+            text-align: center;
+            position: relative;top:400px;
+           
+        }
+        
+
+
+        .btn-primary {
+            position: relative;
+            right:10px;
+            left: 2px;
+            bottom: 5px;
+            font-size: 20px;
+            background-color: rgb(35, 86, 116);
+
+        }
+
+        .btn-primary:hover {
+            background-color: rgb(77, 107, 124);
+            color: rgb(255, 255, 253);
+        }
+      .card{background-color: blanchedalmond;
+            margin:8px;
+            padding: 5px;
+            width:370px;
+            font-size: 30px;
+            border-radius: 1%;
+            font-family: cursive;
+            border: 5px;
+            float: left;
+            background-color: rgb(241, 245, 247);
+            border: 1px solid;
+            box-shadow: 5px 5px 8px black;
+           
+      }
+      .card img{width:200px;height: 200px;
+      }
+      p{font-size: 25px;}
+
+      #demo{position: relative;top:50px;}
+
+
+        .collapse{font-size: 15px;}
+       
+      
+/* Rounded sliders */
+        .switch {
+            position: absolute;
+            left:300px;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            padding: 5px;
+            border-radius: 50%;
+            box-shadow: 4px 4px 15px black;
+
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: rgb(35, 86, 116);
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px rgb(35, 86, 116);
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        
+        .slider.round {
+            border-radius: 34px;
+        }
+
+
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    
+<div class="container">
+    <div class="row">
+
+    <div class="col sm-6">
+        <input type="text" value placeholder="search" id="text" class="btn btn-default" />
+        <input type="button" value="search" id="searchBtn" class="btn btn-default" style="background-color:rgb(35, 86, 116);color:white;" />
+    </div>
+
+<br />
+<div id="coin">
+    </div>
+</div>
+</div>
+
+
+
+
+
+ 
+<script>
+  
+        $(document).ready(() => {
+            coin()
+        })
+
+        var allcoins = [];
+        function coin() {
+            let url = "https://api.coingecko.com/api/v3/coins/list";
+            $.getJSON(url, function (data) {
+                $("#coin").html("");
+                let myString = "";
+                for (let x = 0; x < 100; x++) {
+                    //add stuff to myString
+                    myString += `<div class="card col-sm-4 ">
+                        <div class="card-header">${data[x].name}
+                            <label class="switch">
+                            <input type="checkbox" id="checkbox${x}" onclick="modalswitch(this)">
+                            <span class="slider round"></span>
+                            </label>
+                            </div>
+                            <div class="card-body">
+                            <h2>${data[x].symbol}</h2>
+                            <button type="button"  onclick="opendata('${data[x].id}',${x} )" class="btn btn-primary" data-toggle="collapse" data-target="#cardFooter${x}">More Info</button>
+                            </div>
+                            <div class="card-footer"  id="cardFooter${x}"  class="collapse" >
+                            </div>
+                            </div> `;
+
+                    var obje = {
+                        name: data[x].name,
+                        symbol: data[x].symbol,
+                        id: data[x].id,
+                        num: x
+                    }
+                    allcoins.push(obje)
+
+                } $("#coin").html(myString)
+            });
+
+            $(document).ready(function () {
+                $("#popup").modal({
+                    show: false,
+                    backdrop: 'static'
+                });
+
+
+            });
+        };
+
+
+    
+        function modalswitch(elements) {
+            let checked = $("input:checked").length;
+            let symbol= $(elements).parent().parent().parent().children()[1].children[0].innerText
+            let name = $(elements).parent().parent()[0].innerText;
+            let id = elements.id;
+            let noCoins = "";
+            let obj = {
+                name: name,
+                id: id,
+                symbol:symbol,
+                time: new Date()
+            } 
+          
+            if (elements.checked) {
+                arr.push(obj)
+                saveToLocalStorage();
+                if (checked <= 5) {
+
+                }
+                else {
+
+                    for (let i = 0; i < 5; i++) {
+                        noCoins += `   
+                        <div class="card noCoins">
+                        <span class="appendTomodal">
+                        <span>${arr[i].name}</span>               
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal" onclick="removeChecked(this)">Delete</button>
+                        </span>
+                        </div>`
+                    }
+                    $('.modal-body').html("");
+                    $('.modal-body').append(noCoins)
+                    $('.modal').modal('show');
+                    saveToLocalStorage();
+                    
+                }
+            }
+        }
+
+        function removeChecked(ar, checked) {
+            let namecoins = $(ar).parent()[0].children[0].innerHTML
+            $(ar).parent().parent().remove()
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].name == namecoins) {
+                    $("#" + arr[i].id).prop('checked', false);
+                    arr.splice(i, 1);
+                    $('.modal').modal('hide');
+                    saveToLocalStorage();
+                   
+                   
+                }
+            }
+        }
+
+        $("#closemodal").click(function () {
+            
+            let closet = arr.length - 1;
+            arr[closet].id
+            $("#" + arr[closet].id).prop('checked', false);
+        })
+
+        //add click listener to button
+        $("#searchBtn").click(function () {
+
+            let url2 = "https://api.coingecko.com/api/v3/coins/";
+            var searchWord = $("input").val();
+            
+            var toLowerCase = searchWord.toLowerCase();
+
+            url2 = url2 + toLowerCase;
+
+            for (let i = 0; i < allcoins.length; i++) {
+                if (allcoins[i].symbol == toLowerCase) {
+                    var resultsString =
+                        `<div class="card col-sm-4 ">
+                <div class="card-header">
+               ${allcoins[i].name}                    
+               <label class="switch">
+               <input type="checkbox" id="checkbox${i}" onclick="modalswitch(this)">
+               <span class="slider round"></span>
+               </label>
+                 </div>
+                <div class="card-body">
+               <h2>${allcoins[i].symbol}</h2>
+               <button type="button"  onclick="opendata('${allcoins[i].id}',${allcoins[i].num})" class="btn btn-primary" data-toggle="collapse" data-target="#cardFooter${i}">More Info</button>
+              </div>
+              <div class="card-footer" id="cardFooter${i}" class="collapse">
+        </div>
+    </div> `;
+                }
+            }
+            $("#coin").html("");
+            $("#coin").html(resultsString);
+        });
+
+
+
+        function opendata(id, x) {
+            
+            let url3 = "https://api.coingecko.com/api/v3/coins/" + id;
+            $.getJSON(url3, function (databit) {
+       
+                $("#cardFooter" + x).html(
+                    `  
+                          <img src="${databit.image.large}"/>  
+                          <p>EUR:${databit.market_data.current_price["eur"]} &euro;</p>
+                          <p>USD:${databit.market_data.current_price["usd"]} &#36;</p>
+                          <p>ILS:${databit.market_data.current_price["ils"]} &#8362;</p>
+                         `)
+            });
+        }
+        
+
+    </script>
+
+
+
+</body>
+
+</html>

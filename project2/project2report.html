@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+
+	<title>Document</title>
+	<style>
+		.boody {
+			display: block;
+		}
+
+
+
+		h1 {
+			position: relative;
+			top: 50px;
+			font-size: 50px;
+			font-family: cursive;
+			font-size: 60px;
+			color: beige;
+			text-shadow: 5px 5px black;
+			text-align: center;
+
+		}
+
+		#chartContainer {
+			position: relative;
+			bottom: 400px;
+		}
+
+		a {
+			font-size: 20px;
+		}
+
+		li:hover {
+			background-color: #81898b;
+		}
+
+		body {
+			background-color: rgb(53, 51, 51);
+			text-align: center;
+			font-family: cursive;
+		}
+
+		#chartContainer {
+			position: relative;
+			top: 170px;
+		}
+	</style>
+
+	<script>
+		LiveReports();
+		function LiveReports() {
+			if (arr.length > 0) {
+				var data5Coins = [];
+				let fiveCoins = ""
+				for (let i = 0; i < arr.length; i++) {
+					fiveCoins += arr[i].symbol + ",";
+				}
+				fiveCoins = fiveCoins.toUpperCase();
+				oneCoin = fiveCoins.split(",");
+				let n = oneCoin.length - 1;
+				oneCoin.splice(n, 1);
+				for (let i = 0; i < oneCoin.length; i++) {
+					let objectCoin = {
+						type: "spline",
+						name: oneCoin[i],
+						showInLegend: true,
+						xValueFormatString: "HH,MM",
+						yValueFormatString: "#,##0 USD",
+						dataPoints: []
+					}
+
+					data5Coins.push(objectCoin)
+				}
+				refreshIntervalId = setInterval(() => {
+					let url = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=" + fiveCoins + "&tsyms=BTC,USD,EUR&api_key=9b2856551066c5dc76acd2a6df7bc5432ab66d282663ac23f1812cb7555bb56f";
+
+					$.getJSON(url, (data) => {
+						for (let i = 0; i < oneCoin.length; i++) {
+							data5Coins[i].dataPoints.push({ x: new Date(), y: data["" + oneCoin[i]].USD })
+							console.log(data5Coins)
+
+						}
+						var options = {
+							exportEnabled: true,
+							animationEnabled: true,
+							title: {
+								text: fiveCoins + " to USD"
+							},
+							subtitles: [{
+								text: "Live Reports"
+							}],
+							axisX: {
+								title: "States"
+							},
+							axisY: {
+								title: "Coin Value",
+								titleFontColor: "#4F81BC",
+								lineColor: "#4F81BC",
+								labelFontColor: "#4F81BC",
+								tickColor: "#4F81BC",
+								includeZero: false
+							},
+							axisY2: {
+								title: "Profit in USD",
+								titleFontColor: "#C0504E",
+								lineColor: "#C0504E",
+								labelFontColor: "#C0504E",
+								tickColor: "#C0504E",
+								includeZero: false
+							},
+							toolTip: {
+								shared: true
+							},
+							legend: {
+								cursor: "pointer",
+								itemclick: toggleDataSeries
+							},
+							data: data5Coins
+
+						};
+
+						$("#chartContainer").CanvasJSChart(options);
+
+						function toggleDataSeries(e) {
+							if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+								e.dataSeries.visible = false;
+							} else {
+								e.dataSeries.visible = true;
+							}
+							e.chart.render();
+						}
+					});
+				}, 2000)
+			}
+			else {
+				getCoin();
+				alert("Please check a coin")
+
+			}
+
+		}
+
+
+	</script>
+</head>
+<body>
+	<div class="col sm-4">
+		<h1>Live Report</h1>
+	</div>
+	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+
+</html>
